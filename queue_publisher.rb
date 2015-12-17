@@ -26,6 +26,7 @@ tickets = [
   { body: '20151217F', agent: 'beap', tech: 'haa', category: 'Videogames::Playstation::PS4::DiscTray' }
 ]
 
+# save tickets to the queue for processing later
 tickets.each do |tkt|
   message_details = {
     queue_url: keys[0]['QUEUE_URL'],

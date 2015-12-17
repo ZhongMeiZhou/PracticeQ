@@ -16,19 +16,21 @@ sqs = Aws::SQS::Client.new(
   credentials: aws_access,
 )
 
-# get the messages, this gets the last one
+# get the messages.
+# All of the messages are not necessarily returned.
+
 resp = sqs.receive_message(
   {
     queue_url: keys[0]['QUEUE_URL'],
     attribute_names: ["All"],
     message_attribute_names: ["agent","technician","category"],
-    max_number_of_messages: 10,
+    max_number_of_messages: 10, # Amazon SQS never returns more messages than this value but may return fewer.
     visibility_timeout: 1,
     wait_time_seconds: 1
   }
 )
 
-
+# queue processing
 resp.messages.each do |msg|
   # do something with the message
   puts "ID: #{msg.message_id} | BODY: #{msg.body}"
